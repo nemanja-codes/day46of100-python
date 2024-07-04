@@ -29,5 +29,14 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIFY_CLIENT_ID,
 
 USER_ID = sp.current_user()["id"]
 
-
+year = date[0:4]
+song_uris = []
+for song in top100:
+    result = sp.search(q=f"track:{song} year:{year}", type="track")
+    # print(result)
+    try:
+        uri = result["tracks"]["items"][0]["uri"]
+        song_uris.append(uri)
+    except IndexError:
+        print(f"{song} does not exist in Spotify. Skipped.")
 
